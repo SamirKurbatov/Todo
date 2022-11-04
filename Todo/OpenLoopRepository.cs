@@ -12,7 +12,7 @@ public class OpenLoopRepository
         var json = JsonSerializer.Serialize(newOpenLoop, new JsonSerializerOptions { WriteIndented = true });
         var fileName = $"{Guid.NewGuid()}.json";
         var filePath = Path.Combine(DirectoryName, fileName);
-
+        var stringg = "hello world";
         File.WriteAllText(filePath, json);
         return true;
     }
@@ -30,7 +30,7 @@ public class OpenLoopRepository
             {
                 throw new Exception("OpenLoop cannot be deserialized.");
             }
-            
+
             openLoops.Add(openLoop);
         }
 
