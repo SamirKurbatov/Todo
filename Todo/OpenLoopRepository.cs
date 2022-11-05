@@ -2,22 +2,26 @@
 
 namespace TodoList;
 
-public class OpenLoopRepository
+public static class OpenLoopRepository
 {
-    private const string DirectoryName = "D:/OpenLoops/";
+    internal delegate void ActionNotify(string message);
 
-    public bool Add(OpenLoop newOpenLoop)
+    internal static event ActionNotify Notify;
+
+    private static string DirectoryName = "D:/OpenLoops/";
+
+    public static bool Add(OpenLoop newOpenLoop)
     {
         Directory.CreateDirectory(DirectoryName);
         var json = JsonSerializer.Serialize(newOpenLoop, new JsonSerializerOptions { WriteIndented = true });
         var fileName = $"{Guid.NewGuid()}.json";
         var filePath = Path.Combine(DirectoryName, fileName);
-        var stringg = "hello world";
         File.WriteAllText(filePath, json);
+        Notify?.Invoke("Проблема добавлена!");
         return true;
     }
 
-    public OpenLoop[] Get()
+    public static OpenLoop[] Get()
     {
         var files = Directory.GetFiles(DirectoryName);
         var openLoops = new List<OpenLoop>();
