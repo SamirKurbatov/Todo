@@ -22,6 +22,11 @@ public class Application
             PrintMenu();
             var operationName = Console.ReadLine() ?? string.Empty;
 
+            if (token.IsCancellationRequested)
+            {
+                break;
+            }
+            
             if (_menu.TryGetValue(operationName, out var operation) == false || operation is null)
             {
                 Console.WriteLine($"Команды '{operationName}' не существует");
